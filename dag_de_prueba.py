@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from airflow.models import DAG
-import airflow.utils.dates
+import airflow.utils
 from airflow.operators.dummy_operator import DummyOperator
 from airflow.operators.python_operator import PythonOperator
 from airflow.operators.bash_operator import BashOperator
