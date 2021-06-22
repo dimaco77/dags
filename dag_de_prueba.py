@@ -1,13 +1,14 @@
 from datetime import datetime
 
 from airflow.models import DAG
+import airflow.utils.dates
 from airflow.operators.dummy_operator import DummyOperator
 from airflow.operators.python_operator import PythonOperator
 from airflow.operators.bash_operator import BashOperator
 
 default_args = {
     'owner': 'Emanuel_Baquero',
-    'start_date': datetime(2020, 5, 20, 11, 0, 0)
+    'start_date': days_ago(1) #datetime(2020, 5, 20, 11, 0, 0)
 }
 
 
