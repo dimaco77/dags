@@ -1,26 +1,8 @@
-#
-# Licensed to the Apache Software Foundation (ASF) under one
-# or more contributor license agreements.  See the NOTICE file
-# distributed with this work for additional information
-# regarding copyright ownership.  The ASF licenses this file
-# to you under the Apache License, Version 2.0 (the
-# "License"); you may not use this file except in compliance
-# with the License.  You may obtain a copy of the License at
-#
-#   http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing,
-# software distributed under the License is distributed on an
-# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-# KIND, either express or implied.  See the License for the
-# specific language governing permissions and limitations
-# under the License.
-
-"""Example HTTP operator and sensor"""
-
 import json
 from datetime import timedelta
-
+import logging
+import json
+import string
 from airflow import DAG
 from airflow.providers.http.operators.http import SimpleHttpOperator
 from airflow.providers.http.sensors.http import HttpSensor
@@ -34,7 +16,33 @@ default_args = {
     'email_on_retry': False,
     'retries': 1,
     'retry_delay': timedelta(minutes=5),
+#    'projectName': args['projectName'],
+#    'componentType': args['componentType'],
+#    'componentName' : args['componentName'],
+#    'eventType' : args['eventType'],
+#    'errorCod': args['errorCod'],
+#    'errorDescription' : args['errorDescription']
+
 }
+
+
+def CheckNull(args):
+    if len(args) == 0:
+        return 'llego vacio'
+
+def format_json(args):
+    if "[" in args or "]" in args:
+        #nuevo si viene [ o {}]
+        jsonStr = json.dumps(args)
+        text1 = jsonStr.replace("[","")
+        text2 = text1.replace("]","")
+        args = json.loads(text2)
+
+
+#Set the orchestration name
+#instance_id = await client.start_new("LogAnalyticsEventHubLogOrchestrator", None, name)
+#logging.info(f"Started orchestration with ID = '{instance_id}'.")
+#return client.create_check_status_response(req, instance_id)
 
 dag = DAG('example_http_operator', default_args=default_args, tags=['example'], start_date=days_ago(2))
 
@@ -64,9 +72,20 @@ task_post_op_formenc = SimpleHttpOperator(
 task_get_op = SimpleHttpOperator(
     task_id='get_op',
     method='GET',
+    http_conn_id='http_default',  #CHECK CONNECTION
     endpoint='get',
-    data={"param1": "value1", "param2": "value2"},
+    data={"param1": "value1", 
+    "param2": "value2"},
+    json_data = {
+            "projectName": "",
+            "componentType": "",
+            "componentName" : "",
+            "eventType" : "",
+            "errorCod": "",
+            "errorDescription" :""
+            },
     headers={},
+    xcom_push=True,
     dag=dag,
 )
 # [END howto_operator_http_task_get_op]
@@ -111,4 +130,4 @@ task_http_sensor_check = HttpSensor(
 )
 # [END howto_operator_http_http_sensor_check]
 task_http_sensor_check >> task_post_op >> task_get_op >> task_get_op_response_filter
-task_get_op_response_filter >> task_put_op >> task_del_op >> task_post_op_formenc
+#task_get_op_response_filter >> task_put_op >> task_del_op >> task_post_op_formenc
