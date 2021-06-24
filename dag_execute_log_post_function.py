@@ -105,3 +105,5 @@ with DAG('dag_execute_adf_data_quality',
 
     prueba_bash = BashOperator(task_id='prueba_bash',
                                bash_command='echo prueba_bash')
+
+prueba_bash >> post_logging_app
