@@ -5,6 +5,7 @@ import hashlib
 import hmac
 import base64
 import os
+from airflow.models import DAG
 from datetime import timedelta
 from azure.keyvault.secrets import SecretClient
 from azure.identity import ClientSecretCredential
