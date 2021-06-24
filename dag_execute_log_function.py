@@ -24,7 +24,6 @@ default_args = {
     'eventType' : '',
     'errorCod': '',
     'errorDescription' : ''
-
 }
 
 def CheckNull(args):
