@@ -44,7 +44,7 @@ def format_json(args):
 #logging.info(f"Started orchestration with ID = '{instance_id}'.")
 #return client.create_check_status_response(req, instance_id)
 
-dag = DAG('example_http_operator', default_args=default_args, tags=['example'], start_date=days_ago(2))
+dag = DAG('dag_execute_log_function', default_args=default_args, tags=['example'], start_date=days_ago(2))
 
 dag.doc_md = __doc__
 
@@ -129,5 +129,6 @@ task_http_sensor_check = HttpSensor(
     dag=dag,
 )
 # [END howto_operator_http_http_sensor_check]
-task_http_sensor_check >> task_post_op >> task_get_op >> task_get_op_response_filter
+task_http_sensor_check >> task_get_op 
+#task_http_sensor_check >> task_post_op >> task_get_op >> task_get_op_response_filter
 #task_get_op_response_filter >> task_put_op >> task_del_op >> task_post_op_formenc
