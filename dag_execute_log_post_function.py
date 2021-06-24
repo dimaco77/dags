@@ -10,6 +10,10 @@ from datetime import timedelta
 from azure.keyvault.secrets import SecretClient
 from azure.identity import ClientSecretCredential
 from random import randint
+from airflow.operators.dummy_operator import DummyOperator
+from airflow.operators.python_operator import PythonOperator
+from airflow.operators.bash_operator import BashOperator
+
 
 
 default_args = {
