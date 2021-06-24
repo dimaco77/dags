@@ -82,6 +82,7 @@ def errorLog(projectName, componentType, componentName, eventType, errorCod, err
     json_data = json.dumps(json_data)
 
     response = post_data(shared_key, json_data)
+    print('Error Description: '+errorDescription)
     print(response)
 
 
