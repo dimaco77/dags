@@ -51,13 +51,13 @@ with DAG('dag_execute_adf_data_quality',
     start = DummyOperator(task_id='start')
 
     prueba_python_aux = PythonOperator(task_id='prueba_python',
-                                   python_callable=hello_world_loop)
+                                   python_callable=conn_succ_dummy)
 
     prueba_python2 = PythonOperator(task_id='prueba_python2',
-                                   python_callable=chau_world_loop)
+                                   python_callable=conn_fail_dummy)
 
     prueba_python_dataFactory = PythonOperator( task_id="get-factory",
-                                                python_callable=run_adf_pipeline,
+                                                python_callable=hello_world_loop,
                                                 op_kwargs={'pipeline_name':'Orchestration_ps_ts_generic_datasets_dataQuality'})
 
     prueba_bash = BashOperator(task_id='prueba_bash',
