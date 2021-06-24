@@ -10,16 +10,16 @@ from datetime import timedelta
 from azure.keyvault.secrets import SecretClient
 from azure.identity import ClientSecretCredential
 from random import randint
-from airflow.utils.dates import days_ago
 from airflow.operators.dummy_operator import DummyOperator
 from airflow.operators.python_operator import PythonOperator
 from airflow.operators.bash_operator import BashOperator
-
+from airflow.utils.dates import days_ago
 
 
 default_args = {
-    'owner': 'Airflow Post Logging App',
+    'owner': 'Accenture',
     'depends_on_past': False,
+    'start_date': days_ago(1),
     'email': ['airflow@example.com'],
     'email_on_failure': False,
     'email_on_retry': False,
@@ -85,10 +85,9 @@ def errorLog(projectName, componentType, componentName, eventType, errorCod, err
     print(response)
 
 
-with DAG('dag_execute_adf_data_quality',
+with DAG('dag_execute_logging_app',
          default_args=default_args,
          schedule_interval='@daily',
-         start_date=days_ago(1),
          catchup=False) as dag:
 
     start = DummyOperator(task_id='start')
@@ -106,4 +105,4 @@ with DAG('dag_execute_adf_data_quality',
     prueba_bash = BashOperator(task_id='prueba_bash',
                                bash_command='echo prueba_bash')
 
-prueba_bash >> post_logging_app
+start >> post_logging_app >> prueba_bash
