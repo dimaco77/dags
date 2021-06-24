@@ -45,6 +45,7 @@ dag.doc_md = __doc__
 with DAG('dag_execute_adf_data_quality',
          default_args=default_args,
          schedule_interval='@daily',
+         start_date=days_ago(1),
          catchup=False) as dag:
 
     start = DummyOperator(task_id='start')
