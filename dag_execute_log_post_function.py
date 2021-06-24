@@ -87,7 +87,7 @@ def errorLog(projectName, componentType, componentName, eventType, errorCod, err
 
 with DAG('dag_execute_logging_app',
          default_args=default_args,
-         schedule_interval='@daily',
+         schedule_interval=timedelta(minutes=5),
          catchup=False) as dag:
 
     start = DummyOperator(task_id='start')
