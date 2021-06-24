@@ -15,6 +15,7 @@ from airflow.operators.bash_operator import BashOperator
 default_args = {
     'owner': 'airflow',
     'depends_on_past': False,
+    'start_date': days_ago(1),
     'email': ['airflow@example.com'],
     'email_on_failure': False,
     'email_on_retry': False,
@@ -42,28 +43,24 @@ dag = DAG('dag_example', default_args=default_args, tags=['example'], start_date
 
 dag.doc_md = __doc__
 
-with DAG('dag_execute_adf_data_quality',
+with DAG('test_dag',
          default_args=default_args,
          schedule_interval='@daily',
-         start_date=days_ago(1),
          catchup=False) as dag:
 
     start = DummyOperator(task_id='start')
 
     prueba_python_aux = PythonOperator(task_id='prueba_python',
-                                   python_callable=conn_succ_dummy)
+                                   python_callable=hello_world_loop)
 
     prueba_python2 = PythonOperator(task_id='prueba_python2',
-                                   python_callable=conn_fail_dummy)
+                                   python_callable=chau_world_loop)
 
-    prueba_python_dataFactory = PythonOperator( task_id="get-factory",
-                                                python_callable=hello_world_loop,
-                                                op_kwargs={'pipeline_name':'Orchestration_ps_ts_generic_datasets_dataQuality'})
 
     prueba_bash = BashOperator(task_id='prueba_bash',
                                bash_command='echo prueba_bash')
 
 
-start >> prueba_python_aux >> prueba_python2 >> prueba_python_dataFactory >> prueba_bash
-#task_http_sensor_check >> task_post_op >> task_get_op >> task_get_op_response_filter
-#task_get_op_response_filter >> task_put_op >> task_del_op >> task_post_op_formenc
+
+start >> prueba_python_aux >> prueba_python2 >> prueba_bash
+
