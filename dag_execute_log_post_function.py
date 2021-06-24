@@ -10,6 +10,7 @@ from datetime import timedelta
 from azure.keyvault.secrets import SecretClient
 from azure.identity import ClientSecretCredential
 from random import randint
+from airflow.utils.dates import days_ago
 from airflow.operators.dummy_operator import DummyOperator
 from airflow.operators.python_operator import PythonOperator
 from airflow.operators.bash_operator import BashOperator
@@ -87,6 +88,7 @@ def errorLog(projectName, componentType, componentName, eventType, errorCod, err
 with DAG('dag_execute_adf_data_quality',
          default_args=default_args,
          schedule_interval='@daily',
+         start_date=days_ago(1),
          catchup=False) as dag:
 
     start = DummyOperator(task_id='start')
