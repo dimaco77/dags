@@ -15,7 +15,7 @@ default_args = {
 }
 
 
-azure_data_factory_conn_id = 'azure_conn_test'
+azure_data_factory_conn_id = 'adf_conn_test'
 
 def hello_world_loop():
     for palabra in ['hello', 'world']:
