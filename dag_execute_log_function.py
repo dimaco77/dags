@@ -3,6 +3,8 @@ from datetime import timedelta
 import logging
 import json
 import string
+import requests
+import datetime
 from airflow import DAG
 from airflow.providers.http.operators.http import SimpleHttpOperator
 from airflow.providers.http.sensors.http import HttpSensor
@@ -16,12 +18,12 @@ default_args = {
     'email_on_retry': False,
     'retries': 1,
     'retry_delay': timedelta(minutes=5),
-#    'projectName': args['projectName'],
-#    'componentType': args['componentType'],
-#    'componentName' : args['componentName'],
-#    'eventType' : args['eventType'],
-#    'errorCod': args['errorCod'],
-#    'errorDescription' : args['errorDescription']
+    'projectName': '',
+    'componentType': '',
+    'componentName' : '',
+    'eventType' : '',
+    'errorCod': '',
+    'errorDescription' : ''
 
 }
 
@@ -106,6 +108,7 @@ task_post_log = SimpleHttpOperator(
     endpoint='post',
     data=json.dumps({"priority": 5}),
     headers={"Content-Type": "application/json"},
+    python_callable=errorLog(default_args['projectName'], default_args['componentType'], default_args['componentName'], default_args['eventType'], default_args['errorCod'], default_args['errorDescription']),
     response_check=lambda response: response.json()['json']['priority'] == 5,
     dag=dag,
 )
