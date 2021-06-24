@@ -103,8 +103,18 @@ def errorLog(projectName, componentType, componentName, eventType, errorCod, err
     response = post_data(shared_key, json_data)
     print (response)
 
-task_post_log = SimpleHttpOperator(
-    task_id='post_op',
+task_get_json = SimpleHttpOperator(
+    task_id='get_json',
+    endpoint='get',
+    data=json.dumps({"priority": 5}),
+    headers={"Content-Type": "application/json"},
+    python_callable=errorLog(default_args['projectName'], default_args['componentType'], default_args['componentName'], default_args['eventType'], default_args['errorCod'], default_args['errorDescription']),
+    response_check=lambda response: response.json()['json']['priority'] == 5,
+    dag=dag,
+)
+
+task_post_json = SimpleHttpOperator(
+    task_id='post_json',
     endpoint='post',
     data=json.dumps({"priority": 5}),
     headers={"Content-Type": "application/json"},
@@ -196,6 +206,8 @@ task_http_sensor_check = HttpSensor(
     dag=dag,
 )
 # [END howto_operator_http_http_sensor_check]
-task_http_sensor_check >> task_get_op 
+
+task_get_json >> task_post_json
+#task_http_sensor_check >> task_get_op 
 #task_http_sensor_check >> task_post_op >> task_get_op >> task_get_op_response_filter
 #task_get_op_response_filter >> task_put_op >> task_del_op >> task_post_op_formenc
