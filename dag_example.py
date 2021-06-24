@@ -35,7 +35,7 @@ def conn_succ_dummy():
         print(palabra)
 
 def conn_fail_dummy():
-    for palabra in ['Successful ', 'Connection']:
+    for palabra in ['Failed ', 'Connection']:
         print(palabra)
 
 dag = DAG('dag_example', default_args=default_args, tags=['example'], start_date=days_ago(2))
