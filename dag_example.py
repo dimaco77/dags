@@ -64,6 +64,6 @@ with DAG('dag_execute_adf_data_quality',
                                bash_command='echo prueba_bash')
 
 
-
+start >> prueba_python_aux >> prueba_python2 >> prueba_python_dataFactory >> prueba_bash
 #task_http_sensor_check >> task_post_op >> task_get_op >> task_get_op_response_filter
 #task_get_op_response_filter >> task_put_op >> task_del_op >> task_post_op_formenc
