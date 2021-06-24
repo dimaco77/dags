@@ -11,7 +11,7 @@ from airflow.hooks.base_hook import BaseHook
 
 default_args = {
     'owner': 'Accenture',
-    'start_date': days_ago(5)
+    'start_date': days_ago(1)
 }
 
 
