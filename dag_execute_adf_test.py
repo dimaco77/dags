@@ -8,14 +8,6 @@ from airflow.operators.bash_operator import BashOperator
 
 from airflow.providers.microsoft.azure.hooks.azure_data_factory import AzureDataFactoryHook
 from airflow.hooks.base_hook import BaseHook
-from azure.identity import DefaultAzureCredential
-from azure.mgmt.resource import SubscriptionClient
-
-credential = DefaultAzureCredential()
-subscription_client = SubscriptionClient(credential)
-
-sub_list = subscription_client.subscriptions.list()
-print(list(sub_list))
 
 default_args = {
     'owner': 'Accenture',
