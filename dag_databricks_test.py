@@ -22,7 +22,7 @@ default_args = {
 }
 
 new_cluster = {
-    'spark_version': '2.1.0-db3-scala2.11',
+    'spark_version': '2.4.5-db3-scala2.11',
     'node_type_id': 'r3.xlarge',
     'aws_attributes': {
         'availability': 'ON_DEMAND'

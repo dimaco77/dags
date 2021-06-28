@@ -4,6 +4,11 @@ from airflow.operators.bash import BashOperator
 from airflow.operators.python import PythonOperator
 from airflow.utils.dates import days_ago
 
+default_args = {
+    'owner': 'Accenture',
+    'start_date': days_ago(0)
+}
+
 with models.DAG(
     dag_id="tasks_workflow_demo",
     schedule_interval=None,

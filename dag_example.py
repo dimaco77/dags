@@ -13,7 +13,7 @@ from airflow.operators.bash_operator import BashOperator
 
 
 default_args = {
-    'owner': 'airflow',
+    'owner': 'accenture',
     'depends_on_past': False,
     'start_date': days_ago(1),
     'email': ['airflow@example.com'],
