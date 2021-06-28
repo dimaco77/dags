@@ -26,7 +26,7 @@ default_args = {
 }
 
 new_cluster = {
-    'spark_version': '2.4.5-db3-scala2.11',
+    'spark_version': '3.1.1-db3-scala2.12',
     'node_type_id': 'Standard_DS3_v2',
     'num_workers': 2
 }
