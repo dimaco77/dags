@@ -49,9 +49,8 @@ hook = DatabricksHook(databricks_conn_id)
 
 # DAG
 with DAG(dag_id='dag_execute_azure_databricks',
-		 default_args=default_args,
-		 schedule_interval = '@once') as dag:
-
+default_args=default_args,schedule_interval = '@once') as dag:
+         
     opr_submit_run = DatabricksSubmitRunOperator(
         task_id="submit_run",
         databricks_conn_id="databricks",
@@ -71,8 +70,5 @@ with DAG(dag_id='dag_execute_azure_databricks',
 
 	#TASK 2
     end = DummyOperator(task_id = 'end')
-
-
-
 
 start >>opr_submit_run>>opr_run_now>> end
