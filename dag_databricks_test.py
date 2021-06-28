@@ -52,7 +52,7 @@ dag = DAG('dag_example', default_args=default_args, tags=['example'], start_date
 dag.doc_md = __doc__
 
 dag = DAG(
-    dag_id='example_databricks_operator', default_args=args,
+    dag_id='example_databricks_operator', default_args=default_args,
     schedule_interval='@daily')
 
 with DAG('test_dag',
@@ -68,7 +68,7 @@ with DAG('test_dag',
     #json=notebook_task_params
     )
     
-spark_jar_task = DatabricksSubmitRunOperator(
+    spark_jar_task = DatabricksSubmitRunOperator(
     task_id='spark_jar_task',
     dag=dag,
     new_cluster=new_cluster,
@@ -80,7 +80,7 @@ spark_jar_task = DatabricksSubmitRunOperator(
             'jar': 'dbfs:/lib/etl-0.1.jar'
         }
     ]
-)
+    )
 
 
 
