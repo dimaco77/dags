@@ -8,7 +8,7 @@ from airflow.utils.dates import days_ago
 from airflow.operators.dummy_operator import DummyOperator
 from airflow.operators.python_operator import PythonOperator
 from airflow.contrib.operators.databricks_operator import DatabricksSubmitRunOperator
-
+from airflow.contrib.operators.databricks_operator import DatabricksRunNowOperator
 
 default_args = {
     'owner': 'accenture',
@@ -82,6 +82,12 @@ with DAG('test_dag',
     ]
     )
 
+    opr_run_now = DatabricksRunNowOperator(
+        task_id="run_now",
+        databricks_conn_id=conn_id,
+        job_id=5,
+        notebook_params=notebook_params,
+    )
 
 
 

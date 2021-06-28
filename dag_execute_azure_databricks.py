@@ -25,6 +25,7 @@ default_args = {
     'retry_delay': timedelta(minutes=5),
 }
 
+#IF we wanted to create a new cluster, which we now don´t
 new_cluster = {
     'spark_version': '3.1.1-db3-scala2.12',
     'node_type_id': 'Standard_DS3_v2',
@@ -35,15 +36,7 @@ notebook_task = {
     "notebook_path": "/Users/ebaquero@suppliers.tenaris.com/example",
 }
 
-# Define params for Run Now Operator
-notebook_params = {"Variable": 5}
-
 conn_id="databricks_test"
-#databricks_conn_id = "databricks_test"
-#hook = DatabricksHook(conn_id)
-
-#hook.run_pipeline(pipeline_name,resource_group_name='RG-TDP-TDL-DEV',factory_name='dftdptdldev-core01')
-
 
 # DAG
 with DAG(dag_id='dag_execute_azure_databricks',
@@ -55,13 +48,6 @@ default_args=default_args,schedule_interval = '@once') as dag:
         #new_cluster=new_cluster,
         existing_cluster_id="0118-154944-alpha847",
         notebook_task=notebook_task,
-    )
-
-    opr_run_now = DatabricksRunNowOperator(
-        task_id="run_now",
-        databricks_conn_id=conn_id,
-        job_id=5,
-        notebook_params=notebook_params,
     )
 
 	#TASK 1
