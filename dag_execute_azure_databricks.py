@@ -34,7 +34,7 @@ CLUSTER_ID="0118-154944-alpha847"
 
 # DAG
 with DAG(dag_id='dag_execute_azure_databricks',
-default_args=default_args,schedule_interval=timedelta(minutes=5),catchup=False) as dag:
+default_args=default_args,schedule_interval=timedelta(hour=24),catchup=False) as dag:
          
 
 
