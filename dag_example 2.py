@@ -5,7 +5,7 @@ from airflow.operators.python import PythonOperator
 from airflow.utils.dates import days_ago
 
 with models.DAG(
-    dag_id="example_complex",
+    dag_id="tasks_workflow_demo",
     schedule_interval=None,
     start_date=days_ago(1),
     tags=['example', 'example2', 'example3'],

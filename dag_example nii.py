@@ -13,6 +13,10 @@ def generate_value():
     """Dummy function"""
     return "Bring me a shrubbery!"
 
+default_args = {
+    'owner': 'Accenture',
+    'start_date': days_ago(0)
+}
 
 @task()
 def print_value(value):

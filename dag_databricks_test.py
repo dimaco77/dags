@@ -11,7 +11,7 @@ from airflow.operators.databricks import DatabricksSubmitRunOperator
 
 
 default_args = {
-    'owner': 'airflow',
+    'owner': 'accenture',
     'depends_on_past': False,
     'start_date': days_ago(1),
     'email': ['airflow@example.com'],
@@ -19,13 +19,6 @@ default_args = {
     'email_on_retry': False,
     'retries': 1,
     'retry_delay': timedelta(minutes=5),
-}
-
-args = {
-    'owner': 'airflow',
-    'email': ['airflow@example.com'],
-    'depends_on_past': False,
-    'start_date': airflow.utils.dates.days_ago(2)
 }
 
 new_cluster = {
