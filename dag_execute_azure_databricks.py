@@ -60,4 +60,4 @@ default_args=default_args,schedule_interval=timedelta(minutes=5),catchup=False) 
     end = DummyOperator(task_id = 'end')
 
 
-start >> opr_submit_run >> config_databricks_host >> config_databricks_token >> terminated_cluster >> end
+start >> opr_submit_run >> terminated_cluster >> end
