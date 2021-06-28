@@ -15,7 +15,7 @@ default_args = {
     'start_date': days_ago(1)
 }
 
-azure_data_factory_conn_id = 'azure_data_factory_conn'
+azure_data_factory_conn_id = 'adf_LogAnalytics'
 
 def hello_world_loop():
     for palabra in ['hello', 'world']:
@@ -35,8 +35,10 @@ def run_adf_pipeline(pipeline_name):
 
     #Make connection to ADF, and run pipeline with parameter
     hook = AzureDataFactoryHook(azure_data_factory_conn_id)
-    print('NOMBRE DEL PIPELINE: ', hook.get_pipeline(pipeline_name='pipeline_name',resource_group_name='RG-TDP-TDL-DEV',factory_name='dftdptdldev-core01'))
+    print('NOMBRE DEL PIPELINE: ', hook.get_pipeline(pipeline_name=pipeline_name,resource_group_name='RG-TDP-PILOT-LAB',factory_name='LogAnalyticsLoggingComponent'))
     #hook.run_pipeline(pipeline_name,resource_group_name='RG-TDP-TDL-DEV',factory_name='dftdptdldev-core01')
+    
+
 
 
 with DAG('dag_execute_adf_data_quality',
@@ -55,7 +57,7 @@ with DAG('dag_execute_adf_data_quality',
     prueba_python_dataFactory = PythonOperator( task_id="get-factory",
                                                 python_callable=run_adf_pipeline,
                                                 #op_kwargs={'pipeline_name':'Orchestration_ps_ts_generic_datasets_dataQuality'})
-                                                op_kwargs={'pipeline_name':'prueba_pipeline'})
+                                                op_kwargs={'pipeline_name':'LoggingComponent'})
 
                                                
     prueba_bash = BashOperator(task_id='prueba_bash',
