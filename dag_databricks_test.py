@@ -7,7 +7,7 @@ from airflow import DAG
 from airflow.utils.dates import days_ago
 from airflow.operators.dummy_operator import DummyOperator
 from airflow.operators.python_operator import PythonOperator
-from airflow.operators.databricks import DatabricksSubmitRunOperator
+from airflow.contrib.operators.databricks_operator import DatabricksSubmitRunOperator
 
 
 default_args = {
