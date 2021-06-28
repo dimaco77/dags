@@ -29,7 +29,7 @@ new_cluster = {
     },
     'num_workers': 8
 }
-
+conn_id="databricks_test"
 def hello_world_loop():
     for palabra in ['hello', 'world']:
         print(palabra)
