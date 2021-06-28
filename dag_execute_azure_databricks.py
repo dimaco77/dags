@@ -27,10 +27,7 @@ default_args = {
 
 new_cluster = {
     'spark_version': '2.4.5-db3-scala2.11',
-    'node_type_id': 'r3.xlarge',
-    'aws_attributes': {
-        'availability': 'ON_DEMAND'
-    },
+    #'node_type_id': 'r3.xlarge',
     'num_workers': 2
 }
 
