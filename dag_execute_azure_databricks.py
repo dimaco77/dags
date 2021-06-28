@@ -50,17 +50,9 @@ default_args=default_args,schedule_interval=timedelta(minutes=5),catchup=False) 
         notebook_task=notebook_task,
     )
 
+
+
     #TASK 3
-    config_databricks_host = BashOperator(  	task_id='config_host',
-                                        	bash_command='export DATABRICKS_HOST=https://adb-7736646044667006.6.azuredatabricks.net/?o=7736646044667006')
-
-    #TASK 4
-    config_databricks_token = BashOperator(  	task_id='config_token',
-                                        	bash_command='export DATABRICKS_TOKEN=dapi42559bf10e02c10f245d8bf11f36c253')
-
-
-
-    #TASK 5
     terminated_cluster = BashOperator(  task_id='terminated_cluster',
                                         bash_command='export DATABRICKS_HOST=https://adb-7736646044667006.6.azuredatabricks.net/?o=7736646044667006 && export DATABRICKS_TOKEN=dapi42559bf10e02c10f245d8bf11f36c253 && databricks clusters delete --cluster-id '+CLUSTER_ID)
 
