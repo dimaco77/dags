@@ -70,4 +70,4 @@ default_args=default_args,schedule_interval = '@once') as dag:
 	#TASK 2
     end = DummyOperator(task_id = 'end')
 
-start >>opr_submit_run>>opr_run_now>> end
+start >>opr_submit_run>> end
