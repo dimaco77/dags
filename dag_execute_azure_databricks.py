@@ -25,13 +25,6 @@ default_args = {
     'retry_delay': timedelta(minutes=5),
 }
 
-#IF we wanted to create a new cluster, which we now don´t
-new_cluster = {
-    'spark_version': '3.1.1-db3-scala2.12',
-    'node_type_id': 'Standard_DS3_v2',
-    'num_workers': 2
-}
-
 notebook_task = {
     "notebook_path": "/Users/ebaquero@suppliers.tenaris.com/example",
 }
@@ -56,4 +49,4 @@ default_args=default_args,schedule_interval = '@once') as dag:
 	#TASK 2
     end = DummyOperator(task_id = 'end')
 
-start >>opr_submit_run>> end
+start >> opr_submit_run >> end
