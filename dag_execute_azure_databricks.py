@@ -40,7 +40,8 @@ notebook_params = {"Variable": 5}
 
 conn_id="databricks_test"
 #databricks_conn_id = "databricks_test"
-hook = DatabricksHook(conn_id)
+#hook = DatabricksHook(conn_id)
+
 #hook.run_pipeline(pipeline_name,resource_group_name='RG-TDP-TDL-DEV',factory_name='dftdptdldev-core01')
 
 
