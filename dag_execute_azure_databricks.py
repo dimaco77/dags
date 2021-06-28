@@ -41,9 +41,9 @@ notebook_task = {
 # Define params for Run Now Operator
 notebook_params = {"Variable": 5}
 
-
-databricks_conn_id = "databricks_test"
-hook = DatabricksHook(databricks_conn_id)
+conn_id="databricks_test"
+#databricks_conn_id = "databricks_test"
+hook = DatabricksHook(conn_id)
 #hook.run_pipeline(pipeline_name,resource_group_name='RG-TDP-TDL-DEV',factory_name='dftdptdldev-core01')
 
 
