@@ -52,7 +52,7 @@ default_args=default_args,schedule_interval=timedelta(minutes=5),catchup=False) 
 
     #TASK 3
     terminated_cluster = BashOperator(  task_id='terminated_cluster',
-                                        bash_command='sudo databricks clusters delete --cluster-id '+CLUSTER_ID)
+                                        bash_command='databricks clusters delete --cluster-id '+CLUSTER_ID)
 
 	#TASK 4
     end = DummyOperator(task_id = 'end')
