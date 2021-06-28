@@ -39,7 +39,7 @@ def run_adf_pipeline(pipeline_name):
     #hook.run_pipeline(pipeline_name,resource_group_name='RG-TDP-TDL-DEV',factory_name='dftdptdldev-core01')
 
 
-with DAG('dag_execute_adf_data_quality',
+with DAG('dag_execute_adf_copy',
          default_args=default_args,
          schedule_interval='@daily',
          catchup=False) as dag:
