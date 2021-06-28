@@ -45,3 +45,5 @@ with DAG(
         python_callable=run_adf_pipeline,
         op_kwargs={'pipeline_name': 'LoggingComponent', 'date': yesterday_date}
     )
+
+opr_run_pipeline
