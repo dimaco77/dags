@@ -51,14 +51,14 @@ default_args=default_args,schedule_interval = '@once') as dag:
          
     opr_submit_run = DatabricksSubmitRunOperator(
         task_id="submit_run",
-        databricks_conn_id="databricks",
+        databricks_conn_id="conn_id",
         new_cluster=new_cluster,
         notebook_task=notebook_task,
     )
 
     opr_run_now = DatabricksRunNowOperator(
         task_id="run_now",
-        databricks_conn_id="databricks",
+        databricks_conn_id="conn_id",
         job_id=5,
         notebook_params=notebook_params,
     )
