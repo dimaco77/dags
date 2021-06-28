@@ -11,8 +11,13 @@ from airflow.providers.microsoft.azure.hooks.azure_data_factory import AzureData
 from airflow.hooks.base_hook import BaseHook
 
 default_args = {
-    'owner': 'Accenture',
-    'start_date': days_ago(1)
+    'owner': 'accenture',
+    'depends_on_past': False,
+    'start_date': days_ago(1),
+    'email': ['airflow@example.com'],
+    'email_on_failure': False,
+    'email_on_retry': False,
+    'retries': 0,
 }
 yesterday_date='{{ yesterday_ds_nodash }}'
 
