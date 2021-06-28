@@ -14,7 +14,7 @@ from airflow.operators.bash_operator import BashOperator
 from airflow.providers.databricks.operators.databricks import DatabricksSubmitRunOperator
 
 default_args = {
-    'owner': 'airflow',
+    'owner': 'accenture',
     'depends_on_past': False,
     'start_date': days_ago(1),
     'email': ['airflow@example.com'],
@@ -24,10 +24,40 @@ default_args = {
     'retry_delay': timedelta(minutes=5),
 }
 
+new_cluster = {
+    'spark_version': '2.4.5-db3-scala2.11',
+    'node_type_id': 'r3.xlarge',
+    'aws_attributes': {
+        'availability': 'ON_DEMAND'
+    },
+    'num_workers': 8
+}
+
 # DAG
 with DAG(dag_id='dag_execute_azure_databricks',
 		 default_args=default_args,
 		 schedule_interval = '@once') as dag:
+
+        notebook_task = DatabricksSubmitRunOperator(
+        task_id='notebook_task',
+        dag=dag,
+        #json=notebook_task_params
+        )
+
+        spark_jar_task = DatabricksSubmitRunOperator(
+        task_id='spark_jar_task',
+        dag=dag,
+        new_cluster=new_cluster,
+        spark_jar_task={
+            'main_class_name': 'com.example.ProcessData'
+        },
+        libraries=[
+            {
+                'jar': 'dbfs:/lib/etl-0.1.jar'
+            }
+        ]
+        )
+
 
 
 	#TASK 1
@@ -35,6 +65,7 @@ with DAG(dag_id='dag_execute_azure_databricks',
 
 	#TASK 2
 	end = DummyOperator(task_id = 'end')
+    
 
 
-start >> end
+start >>notebook_task>> end
