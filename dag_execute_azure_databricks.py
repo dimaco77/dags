@@ -38,34 +38,12 @@ with DAG(dag_id='dag_execute_azure_databricks',
 		 default_args=default_args,
 		 schedule_interval = '@once') as dag:
 
-        notebook_task = DatabricksSubmitRunOperator(
-        task_id='notebook_task',
-        dag=dag,
-        #json=notebook_task_params
-        )
-
-        spark_jar_task = DatabricksSubmitRunOperator(
-        task_id='spark_jar_task',
-        dag=dag,
-        new_cluster=new_cluster,
-        spark_jar_task={
-            'main_class_name': 'com.example.ProcessData'
-        },
-        libraries=[
-            {
-                'jar': 'dbfs:/lib/etl-0.1.jar'
-            }
-        ]
-        )
-
-
 
 	#TASK 1
 	start = DummyOperator(task_id = 'start')
 
 	#TASK 2
 	end = DummyOperator(task_id = 'end')
-    
 
 
-start >>notebook_task>> end
+start >> end
