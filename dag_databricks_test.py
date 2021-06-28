@@ -86,7 +86,7 @@ with DAG('dag_databricks_test',
         task_id="run_now",
         databricks_conn_id=conn_id,
         job_id=5,
-        notebook_params=notebook_params,
+        notebook_params='User/*/example',
     )
 
 
