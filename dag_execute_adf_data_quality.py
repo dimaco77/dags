@@ -35,7 +35,7 @@ def run_adf_pipeline(pipeline_name):
 
     #Make connection to ADF, and run pipeline with parameter
     hook = AzureDataFactoryHook(azure_data_factory_conn_id)
-    print('ACAAA', hook.get_factory('RG-TDP-TDL-DEV','dftdptdldev-core01'))
+    print('NOMBRE DEL PIPELINE: ', hook.get_pipeline(pipeline_name='pipeline_name',resource_group_name='RG-TDP-TDL-DEV',factory_name='dftdptdldev-core01'))
     #hook.run_pipeline(pipeline_name,resource_group_name='RG-TDP-TDL-DEV',factory_name='dftdptdldev-core01')
 
 
