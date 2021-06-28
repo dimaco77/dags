@@ -55,7 +55,7 @@ dag = DAG(
     dag_id='example_databricks_operator', default_args=default_args,
     schedule_interval='@daily')
 
-with DAG('test_dag',
+with DAG('dag_databricks_test',
          default_args=default_args,
          schedule_interval='@daily',
          catchup=False) as dag:

@@ -41,7 +41,7 @@ def run_adf_pipeline(pipeline_name):
 
 
 
-with DAG('dag_execute_adf_data_quality',
+with DAG('dag_execute_adf_data_quality_LogAnalitycs',
          default_args=default_args,
          schedule_interval='@daily',
          catchup=False) as dag:

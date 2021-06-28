@@ -43,7 +43,7 @@ dag = DAG('dag_example', default_args=default_args, tags=['example'], start_date
 
 dag.doc_md = __doc__
 
-with DAG('test_dag',
+with DAG('dag_example',
          default_args=default_args,
          schedule_interval='@daily',
          catchup=False) as dag:

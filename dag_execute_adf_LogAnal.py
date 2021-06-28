@@ -32,7 +32,7 @@ default_args = {
 }
 
 with DAG(
-    'azure_data_factory_LA',
+    'dag_execute_adf_LogAna',
     start_date=datetime(2019, 1, 1),
     max_active_runs=1,
     schedule_interval=timedelta(minutes=30),

@@ -10,7 +10,7 @@ default_args = {
 }
 
 with models.DAG(
-    dag_id="tasks_workflow_demo",
+    dag_id="dag_example_2",
     schedule_interval=None,
     start_date=days_ago(1),
     tags=['example', 'example2', 'example3'],
