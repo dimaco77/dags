@@ -54,8 +54,10 @@ with DAG('dag_execute_adf_data_quality',
 
     prueba_python_dataFactory = PythonOperator( task_id="get-factory",
                                                 python_callable=run_adf_pipeline,
-                                                op_kwargs={'pipeline_name':'Orchestration_ps_ts_generic_datasets_dataQuality'})
+                                                #op_kwargs={'pipeline_name':'Orchestration_ps_ts_generic_datasets_dataQuality'})
+                                                op_kwargs={'pipeline_name':'prueba_pipeline'})
 
+                                               
     prueba_bash = BashOperator(task_id='prueba_bash',
                                bash_command='echo prueba_bash')
 
