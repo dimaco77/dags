@@ -30,23 +30,32 @@ notebook_task = {
 }
 
 conn_id="databricks_test"
+CLUSTER_ID="0118-154944-alpha847"
 
 # DAG
 with DAG(dag_id='dag_execute_azure_databricks',
 default_args=default_args,schedule_interval=timedelta(minutes=5),catchup=False) as dag:
          
-    opr_submit_run = DatabricksSubmitRunOperator(
-        task_id="submit_run",
-        databricks_conn_id=conn_id,
-        #new_cluster=new_cluster,
-        existing_cluster_id="0118-154944-alpha847",
-        notebook_task=notebook_task,
-    )
+
 
 	#TASK 1
     start = DummyOperator(task_id = 'start')
 
-	#TASK 2
+    #TASK 2
+    opr_submit_run = DatabricksSubmitRunOperator(
+        task_id="submit_run",
+        databricks_conn_id=conn_id,
+        # new_cluster=new_cluster,
+        existing_cluster_id=CLUSTER_ID,
+        notebook_task=notebook_task,
+    )
+
+    #TASK 3
+    terminated_cluster = BashOperator(  task_id='terminated_cluster',
+                                        bash_command='databricks clusters delete --cluster-id '+CLUSTER_ID)
+
+	#TASK 4
     end = DummyOperator(task_id = 'end')
 
-start >> opr_submit_run >> end
+
+start >> opr_submit_run >> terminated_cluster >> end
