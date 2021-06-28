@@ -64,23 +64,49 @@ def run_adf_pipeline(pipeline_name):
 
     try:
         if hook._linked_service_exists(v_resource_group_name,v_factory_name,v_linked_service):
-            print('Existe Linked Service ,v_linked_service)
+            print('Existe Linked Service', v_linked_service)
         else:
-            print('No Existe Linked Service, v_linked_service)
+            print('No Existe Linked Service', v_linked_service)
     except:
         print('Fallo _linked_service_exists')
                   
                   
     try:
-        hook.get_dataset(v_dataset_name,v_resource_group_name,v_factory_name):
+        hook.get_dataset(v_dataset_name,v_resource_group_name,v_factory_name)
     except:
-        print('Fallo _linked_service_exists')
+        print('Fallo get_dataset')
                   
 
-                  
-                  
-            
-        
+    try:
+        if hook._dataset_exists(v_resource_group_name,v_factory_name,v_dataset_name):
+            print('Existe Dataset' ,v_dataset_name)
+        else:
+            print('No Existe Dataset', v_dataset_name)
+    except:
+        print('Fallo _dataset_exists')
+
+    try:
+        hook.get_pipeline(pipeline_name, v_resource_group_name, v_factory_name)
+    except:
+        print('Fallo get_dataset')
+
+
+
+    try:
+        if hook._pipeline_exists(v_resource_group_name,v_factory_name,pipeline_name):
+            print('Existe Pipeline' ,pipeline_name)
+        else:
+            print('No Existe Pipeline', pipeline_name)
+    except:
+        print('Fallo _pipeline_exists')
+
+
+    try:
+        hook.run_pipeline(pipeline_name, v_resource_group_name, v_factory_name)
+    except:
+        print('Fallo run_pipeline')
+
+
 
 
 
@@ -100,7 +126,7 @@ with DAG('dag_execute_adf_data_quality',
     prueba_python_dataFactory = PythonOperator( task_id="get-factory",
                                                 python_callable=run_adf_pipeline,
                                                 #op_kwargs={'pipeline_name':'Orchestration_ps_ts_generic_datasets_dataQuality'})
-                                                op_kwargs={'pipeline_name':'prueba_pipeline_1'})
+                                                op_kwargs={'pipeline_name':'prueba_pipeline'})
 
                                                
     prueba_bash = BashOperator(task_id='prueba_bash',
