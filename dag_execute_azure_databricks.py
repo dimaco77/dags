@@ -33,7 +33,7 @@ conn_id="databricks_test"
 
 # DAG
 with DAG(dag_id='dag_execute_azure_databricks',
-default_args=default_args,schedule_interval=timedelta(minutes=5)) as dag:
+default_args=default_args,schedule_interval=timedelta(minutes=5),catchup=False) as dag:
          
     opr_submit_run = DatabricksSubmitRunOperator(
         task_id="submit_run",
