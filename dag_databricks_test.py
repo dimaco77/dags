@@ -30,15 +30,6 @@ new_cluster = {
     'num_workers': 8
 }
 
-notebook_task = DatabricksSubmitRunOperator(
-    task_id='notebook_task',
-)
-
-spark_jar_task = DatabricksSubmitRunOperator(
-    task_id='spark_jar_task',
-)
-notebook_task.set_downstream(spark_jar_task)
-
 def hello_world_loop():
     for palabra in ['hello', 'world']:
         print(palabra)
@@ -64,8 +55,14 @@ dag = DAG(
     dag_id='example_databricks_operator', default_args=args,
     schedule_interval='@daily')
 
-# Example of using the JSON parameter to initialize the operator.
-notebook_task = DatabricksSubmitRunOperator(
+with DAG('test_dag',
+         default_args=default_args,
+         schedule_interval='@daily',
+         catchup=False) as dag:
+
+    start = DummyOperator(task_id='start')
+
+    notebook_task = DatabricksSubmitRunOperator(
     task_id='notebook_task',
     dag=dag,
     #json=notebook_task_params
@@ -85,12 +82,6 @@ spark_jar_task = DatabricksSubmitRunOperator(
     ]
 )
 
-with DAG('test_dag',
-         default_args=default_args,
-         schedule_interval='@daily',
-         catchup=False) as dag:
-
-    start = DummyOperator(task_id='start')
 
 
 
