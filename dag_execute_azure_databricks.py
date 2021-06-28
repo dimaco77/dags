@@ -31,8 +31,16 @@ new_cluster = {
     'aws_attributes': {
         'availability': 'ON_DEMAND'
     },
-    'num_workers': 8
+    'num_workers': 2
 }
+
+notebook_task = {
+    "notebook_path": "/Users/ebaquero@suppliers.tenaris.com/example",
+}
+
+# Define params for Run Now Operator
+notebook_params = {"Variable": 5}
+
 
 databricks_conn_id = "databricks_test"
 hook = DatabricksHook(databricks_conn_id)
@@ -44,29 +52,27 @@ with DAG(dag_id='dag_execute_azure_databricks',
 		 default_args=default_args,
 		 schedule_interval = '@once') as dag:
 
-
-	#TASK 1
-	start = DummyOperator(task_id = 'start')
-
-    #TASK 3
-        spark_jar_task = DatabricksSubmitRunOperator(
-    task_id='spark_jar_task',
-    dag=dag,
-    new_cluster=new_cluster,
-    spark_jar_task={
-        'main_class_name': 'com.example.ProcessData'
-    },
-    libraries=[
-        {
-            'jar': 'dbfs:/lib/etl-0.1.jar'
-        }
-    ]
+    opr_submit_run = DatabricksSubmitRunOperator(
+        task_id="submit_run",
+        databricks_conn_id="databricks",
+        new_cluster=new_cluster,
+        notebook_task=notebook_task,
     )
 
+    opr_run_now = DatabricksRunNowOperator(
+        task_id="run_now",
+        databricks_conn_id="databricks",
+        job_id=5,
+        notebook_params=notebook_params,
+    )
+
+	#TASK 1
+    start = DummyOperator(task_id = 'start')
+
 	#TASK 2
-	end = DummyOperator(task_id = 'end')
+    end = DummyOperator(task_id = 'end')
 
 
 
 
-start >> end
+start >>opr_submit_run>>opr_run_now>> end
