@@ -10,7 +10,7 @@ from airflow.utils.dates import days_ago
 from airflow.operators.dummy_operator import DummyOperator
 from airflow.operators.python_operator import PythonOperator
 from airflow.operators.bash_operator import BashOperator
-
+from airflow.providers.databricks.hooks.databricks import DataBricksHook
 from airflow.providers.databricks.operators.databricks import DatabricksSubmitRunOperator
 
 default_args = {
@@ -32,6 +32,12 @@ new_cluster = {
     },
     'num_workers': 8
 }
+
+databricks_conn_id = "databricks_test"
+hook = DataBricksHook(databricks_conn_id)
+#hook.run_pipeline(pipeline_name,resource_group_name='RG-TDP-TDL-DEV',factory_name='dftdptdldev-core01')
+
+
 
 # DAG
 with DAG(dag_id='dag_execute_azure_databricks',
