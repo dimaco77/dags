@@ -53,6 +53,7 @@ default_args=default_args,schedule_interval = '@once') as dag:
         task_id="submit_run",
         databricks_conn_id=conn_id,
         #new_cluster=new_cluster,
+        existing_cluster_id="0118-154944-alpha847",
         notebook_task=notebook_task,
     )
 
