@@ -5,15 +5,16 @@ from airflow.utils.dates import days_ago
 from airflow.operators.dummy_operator import DummyOperator
 from airflow.operators.python_operator import PythonOperator
 from airflow.operators.bash_operator import BashOperator
+from pendulum import yesterday
 
 from airflow.providers.microsoft.azure.hooks.azure_data_factory import AzureDataFactoryHook
 from airflow.hooks.base_hook import BaseHook
 
 default_args = {
     'owner': 'Accenture',
-    'start_date': days_ago(5)
+    'start_date': days_ago(1)
 }
-
+yesterday_date='{{ yesterday_ds_nodash }}'
 
 azure_data_factory_conn_id = 'azure_data_factory_conn'
 
@@ -53,7 +54,7 @@ with DAG('dag_execute_adf_data_quality',
 
     prueba_python_dataFactory = PythonOperator( task_id="get-factory",
                                                 python_callable=run_adf_pipeline,
-                                                op_kwargs={'pipeline_name':'Orchestration_ps_ts_generic_datasets_dataQuality'})
+                                                op_kwargs={'pipeline_name':'Orchestration_ps_ts_generic_datasets_dataQuality','date':yesterday_date})
 
     prueba_bash = BashOperator(task_id='prueba_bash',
                                bash_command='echo prueba_bash')
