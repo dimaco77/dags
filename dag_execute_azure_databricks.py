@@ -34,7 +34,7 @@ new_cluster = {
 }
 
 databricks_conn_id = "databricks_test"
-hook = DataBricksHook(databricks_conn_id)
+hook = DatabricksHook(databricks_conn_id)
 #hook.run_pipeline(pipeline_name,resource_group_name='RG-TDP-TDL-DEV',factory_name='dftdptdldev-core01')
 
 
