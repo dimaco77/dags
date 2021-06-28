@@ -43,5 +43,5 @@ with DAG(
     opr_run_pipeline = PythonOperator(
         task_id='run_pipeline',
         python_callable=run_adf_pipeline,
-        op_kwargs={'pipeline_name': 'Orchestration_ps_ts_generic_datasets_dataQuality', 'date': yesterday_date}
+        op_kwargs={'LoggingComponent': 'Orchestration_ps_ts_generic_datasets_dataQuality', 'date': yesterday_date}
     )
