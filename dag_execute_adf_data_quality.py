@@ -12,7 +12,7 @@ from airflow.hooks.base_hook import BaseHook
 from airflow.models import Variable
 
 default_args = {
-    'owner': 'Accenture',
+    'owner': Variable.get("owner"),
     'start_date': days_ago(1)
 }
 
@@ -33,10 +33,10 @@ def run_adf_pipeline(pipeline_name):
 
     #Create a dictionary with date parameter
     params = {}
-    v_resource_group_name='RG-TDP-TDL-DEV'
-    v_factory_name='dftdptdldev-core01'
+    v_resource_group_name = Variable.get("resource_group_name")
+    v_factory_name = Variable.get("factory_name")
     v_linked_service = Variable.get("linked_service")
-    v_dataset_name='prueba_parquet'
+    v_dataset_name = Variable.get("dataset_name")
     hook = AzureDataFactoryHook(azure_data_factory_conn_id)
 
     try:
