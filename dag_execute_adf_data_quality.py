@@ -43,6 +43,7 @@ def run_adf_pipeline(pipeline_name):
         print('NOMBRE DEL PIPELINE: ', hook.get_factory(pipeline_name=pipeline_name,
                                                         resource_group_name=v_resource_group_name,
                                                         factory_name=v_factory_name))
+        print('get_factory funciono Correctamente..')
     except:
         print('Fallo get_factory')
         
@@ -58,6 +59,7 @@ def run_adf_pipeline(pipeline_name):
         
     try:
         hook.get_linked_service(v_linked_service,v_resource_group_name,v_factory_name)
+        print('get_linked_service funciono Correctamente..')
     except:
         print('Fallo get_linked_service')
         
@@ -73,6 +75,7 @@ def run_adf_pipeline(pipeline_name):
                   
     try:
         hook.get_dataset(v_dataset_name,v_resource_group_name,v_factory_name)
+        print('get_dataset funciono Correctamente..')
     except:
         print('Fallo get_dataset')
                   
@@ -87,6 +90,7 @@ def run_adf_pipeline(pipeline_name):
 
     try:
         hook.get_pipeline(pipeline_name, v_resource_group_name, v_factory_name)
+        print('get_pipeline funciono Correctamente..')
     except:
         print('Fallo get_dataset')
 
@@ -103,6 +107,7 @@ def run_adf_pipeline(pipeline_name):
 
     try:
         hook.run_pipeline(pipeline_name, v_resource_group_name, v_factory_name)
+        print('run_pipeline funciono Correctamente..')
     except:
         print('Fallo run_pipeline')
 
