@@ -9,6 +9,7 @@ from pendulum import yesterday
 
 from airflow.providers.microsoft.azure.hooks.azure_data_factory import AzureDataFactoryHook
 from airflow.hooks.base_hook import BaseHook
+from airflow.models import Variable
 
 default_args = {
     'owner': 'Accenture',
@@ -34,7 +35,7 @@ def run_adf_pipeline(pipeline_name):
     params = {}
     v_resource_group_name='RG-TDP-TDL-DEV'
     v_factory_name='dftdptdldev-core01'
-    v_linked_service='ls_adls_tdl'
+    v_linked_service = Variable.get("linked_service")
     v_dataset_name='prueba_parquet'
     hook = AzureDataFactoryHook(azure_data_factory_conn_id)
 
