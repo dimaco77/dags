@@ -52,7 +52,8 @@ default_args=default_args,schedule_interval=timedelta(hours=24),catchup=False) a
 
     #TASK 3
     terminate_cluster = BashOperator(  task_id='terminate_cluster',
-                                        bash_command='export DATABRICKS_HOST=https://adb-7736646044667006.6.azuredatabricks.net/?o=7736646044667006 && export DATABRICKS_TOKEN=dapi42559bf10e02c10f245d8bf11f36c253 && databricks clusters delete --cluster-id '+CLUSTER_ID)
+                                        #bash_command='export DATABRICKS_HOST=https://adb-7736646044667006.6.azuredatabricks.net/?o=7736646044667006 && export DATABRICKS_TOKEN=dapi42559bf10e02c10f245d8bf11f36c253 && databricks clusters delete --cluster-id '+CLUSTER_ID
+                                        )
 
     #TASK 6
     end = DummyOperator(task_id = 'end')
