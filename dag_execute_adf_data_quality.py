@@ -61,6 +61,7 @@ def run_adf_pipeline(pipeline_name):
     try:
         hook.get_linked_service(v_linked_service,v_resource_group_name,v_factory_name)
         print('get_linked_service funciono Correctamente..')
+        print(hook.get_linked_service(v_linked_service,v_resource_group_name,v_factory_name)
     except:
         print('Fallo get_linked_service')
         
@@ -77,6 +78,7 @@ def run_adf_pipeline(pipeline_name):
     try:
         hook.get_dataset(v_dataset_name,v_resource_group_name,v_factory_name)
         print('get_dataset funciono Correctamente..')
+        print(hook.get_dataset(v_dataset_name,v_resource_group_name,v_factory_name))
     except:
         print('Fallo get_dataset')
                   
@@ -92,6 +94,7 @@ def run_adf_pipeline(pipeline_name):
     try:
         hook.get_pipeline(pipeline_name, v_resource_group_name, v_factory_name)
         print('get_pipeline funciono Correctamente..')
+        print(hook.get_pipeline(pipeline_name, v_resource_group_name, v_factory_name))
     except:
         print('Fallo get_dataset')
 
