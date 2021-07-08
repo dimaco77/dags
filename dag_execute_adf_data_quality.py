@@ -61,7 +61,7 @@ def run_adf_pipeline(pipeline_name):
     try:
         hook.get_linked_service(v_linked_service,v_resource_group_name,v_factory_name)
         print('get_linked_service funciono Correctamente..')
-        print(hook.get_linked_service(v_linked_service,v_resource_group_name,v_factory_name)
+        print(hook.get_linked_service(v_linked_service,v_resource_group_name,v_factory_name))
     except:
         print('Fallo get_linked_service')
         
