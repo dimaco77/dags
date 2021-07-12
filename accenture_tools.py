@@ -108,9 +108,7 @@ class ExecutePipeline(BaseOperator):
             print('Fallo run_pipeline')
 
     def execute(self, context):
-        message = "Hello {}".format(self.name)
         self.run_adf_pipeline(self.pipeline,self.resource_group)
-        print(message)
         return True
 
 class CheckPipelineStatus(BaseOperator):
