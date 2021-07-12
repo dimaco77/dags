@@ -4,7 +4,7 @@ from os import path
 import tempfile
 
 import pandas as pd
-import pymssql as sql
+import pymssql
 
 from airflow import DAG
 
@@ -48,7 +48,7 @@ def _execute_query(odbc_conn_id, wasb_conn_id, dataset_container_output, **conte
     server = 'airflowazure1-ondemand.sql.azuresynapse.net'
     user = 'sqladminuser'
     password = '12345678U!'
-    conn = sql.connect(server, user, password, "synapsedb")
+    conn = pymssql.connect(server, user, password, "synapsedb")
     cursor = conn.cursor(as_dict=True)
     
     cursor.execute(query)
