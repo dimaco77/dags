@@ -55,7 +55,6 @@ def chau_world_loop():
     for palabra in ['chau', 'world']:
         print(palabra)
 
-
 def run_adf_pipeline(pipeline_name):
     if tof_pipeline_run.lower() != "true" or tof_all.lower() != "true":
         print("----------run_pipeline var")
@@ -225,10 +224,10 @@ def errorLog(projectName, componentType, componentName, eventType, errorCod, err
     print(response)
 
 
-with DAG('dag__demo_vars',
+with DAG('dag__demo_fail_callback',
          default_args=default_args,
          schedule_interval='@hourly',
-         catchup=False, on_failure_callback="on_failure_callback",on_success_callback="on_succeed_callback") as dag:
+         catchup=False, on_failure_callback="on_failure_callback") as dag:
 
     start = DummyOperator(task_id='start')
 
@@ -249,10 +248,11 @@ with DAG('dag__demo_vars',
 
     send_data_to_az_synapse = DummyOperator(task_id='send_data_to_az_synapse')
 
-    send_data_to_az_an_serv = DummyOperator(task_id='send_data_to_az_an_serv')
+    send_data_to_az_an_serv = BashOperator(task_id='send_data_to_az_an_serv',
+                     bash_command='exit 0')
 
     end = BashOperator(task_id='end',
-                               bash_command='exit 0')
+                               bash_command='exit 1')
 
 start >> run_etl_pipeline >> Log_error_if_failure 
 run_etl_pipeline >> run_validation_pipeline >> Log_error_if_failure 
