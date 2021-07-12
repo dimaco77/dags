@@ -22,9 +22,13 @@ from airflow.models import Variable
 from airflow.providers.http.operators.http import SimpleHttpOperator
 from airflow.providers.http.sensors.http import HttpSensor
 
-tof_pipeline_run="tof_pipeline_run"
-tof_az_func = "tof_az_func"
-tof_all = "tof_all" 
+#tof_pipeline_run="tof_pipeline_run"
+tof_pipeline_run = Variable.get("tof_pipeline_run")
+#tof_az_func = "tof_az_func"
+tof_pipeline_run = Variable.get("tof_az_func")
+#tof_all = "tof_all" 
+tof_pipeline_run = Variable.get("tof_all")
+
 
 #default arguments
 default_args = {
