@@ -160,7 +160,7 @@ def on_retry_callback(context):
 
 #IF task fails after retries
 def failure(context):
-    print("Fail works  !  ")
+    print("-----------Fail works!  ")
     print(context)
 
 #IF task succeeds
