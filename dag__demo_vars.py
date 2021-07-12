@@ -24,7 +24,7 @@ from airflow.providers.http.sensors.http import HttpSensor
 
 tof_pipeline_run="tof_pipeline_run"
 tof_az_func = "tof_az_func"
-tof_all = "tof_all"
+tof_all = "tof_all" 
 
 #default arguments
 default_args = {
@@ -217,7 +217,7 @@ def errorLog(projectName, componentType, componentName, eventType, errorCod, err
     print(response)
 
 
-with DAG('dag__poc_dummy_1',
+with DAG('dag__demo_vars',
          default_args=default_args,
          schedule_interval='@hourly',
          catchup=False, on_failure_callback="on_failure_callback") as dag:
