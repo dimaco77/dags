@@ -159,8 +159,9 @@ def on_retry_callback(context):
     print("Retry works  !  ")
 
 #IF task fails after retries
-def on_failure_callback(context):
+def failure(context):
     print("Fail works  !  ")
+    print(context)
 
 #IF task succeeds
 def on_succeed_callback(context):
@@ -227,7 +228,7 @@ def errorLog(projectName, componentType, componentName, eventType, errorCod, err
 with DAG('dag__demo_fail_callback',
          default_args=default_args,
          schedule_interval='@hourly',
-         catchup=False, on_failure_callback="on_failure_callback") as dag:
+         catchup=False) as dag:
 
     start = DummyOperator(task_id='start')
 
@@ -249,10 +250,12 @@ with DAG('dag__demo_fail_callback',
     send_data_to_az_synapse = DummyOperator(task_id='send_data_to_az_synapse')
 
     send_data_to_az_an_serv = BashOperator(task_id='send_data_to_az_an_serv',
-                     bash_command='exit 0')
+                     bash_command='exit 1',
+                     on_failure_callback="failure")
 
     end = BashOperator(task_id='end',
-                               bash_command='exit 1')
+                        bash_command='exit 0',
+                        on_failure_callback="failure")
 
 start >> run_etl_pipeline >> Log_error_if_failure 
 run_etl_pipeline >> run_validation_pipeline >> Log_error_if_failure 
