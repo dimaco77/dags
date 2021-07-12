@@ -1,5 +1,5 @@
 from datetime import datetime
-
+from datetime import timedelta
 from airflow.models import DAG
 from airflow.utils.dates import days_ago
 from airflow.operators.dummy_operator import DummyOperator
@@ -34,6 +34,7 @@ default_args = {
     'owner': Variable.get("owner"),
     'start_date': days_ago(1),
     "retries":1,
+    'retry_delay': timedelta(seconds=5),
     "email_on_failure":True,
     "email_on_retry": True,
     "email": "gonzalo.lucena@accenture.com"
