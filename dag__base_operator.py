@@ -16,7 +16,7 @@ from airflow.operators.bash_operator import BashOperator
 from airflow.utils.dates import days_ago
 from accenture_tools import ExecutePipeline, CheckPipelineStatus
 from airflow.models import Variable
-import time
+from airflow.sensors.filesystem import FileSensor
 
 
 
@@ -43,24 +43,18 @@ with DAG('dag__base_operator',
 
     start = DummyOperator(task_id='start')
 
+    t_delete_activity_success = BashOperator(task_id='t_delete_activity_success', bash_command='rm /opt/airflow/logs/finishADF')
     t_HelloOperator = ExecutePipeline(task_id="t_HelloOperator", resource_group=RESOURCE_GROUP,pipeline='prueba_pipeline')
 
-
-
-    refresh_activity_runs = BashOperator(task_id='refresh_activity_runs', bash_command='az login -u ebaquero@suppliers.tenaris.com -p Argentina123 && az config set extension.use_dynamic_install=yes_without_prompt && az datafactory pipeline-run query-by-factory --factory-name "dftdptdldev-core01" --last-updated-after "2021-01-16T00:36:44.3345758Z" --last-updated-before "2022-06-16T00:49:48.3686473Z" --resource-group "RG-TDP-TDL-DEV" > /opt/airflow/logs/activity_runs.json')
-    t_CheckPipelineStatus = CheckPipelineStatus(task_id='t_CheckPipelineStatus', adf=ADF_NAME, resource_group=RESOURCE_GROUP)
+    task_waiting_for_data = FileSensor( task_id='task_waiting_for_data',
+                                        fs_conn_id='path_adf_activity',
+                                        filepath='finishADF',
+                                        poke_interval=10
+                                    )
 
     end = BashOperator(task_id='end',bash_command='echo prueba_bash')
-    while not t_CheckPipelineStatus:
-        time.wait(10)
-        refresh_activity_runs >> t_CheckPipelineStatus
 
-    start >> t_HelloOperator >> refresh_activity_runs >> t_CheckPipelineStatus >> end
-
-
-
-
-
+    start >> t_delete_activity_success >> t_HelloOperator >> task_waiting_for_data >> end
 
 
 
