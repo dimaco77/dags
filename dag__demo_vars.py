@@ -29,12 +29,6 @@ tof_az_func = Variable.get("tof_az_func")
 #tof_all = "tof_all" 
 tof_all = Variable.get("tof_all")
 
-print("types")
-print(type(tof_pipeline_run))
-print(type(tof_az_func))
-print(type(tof_all))
-
-
 #default arguments
 default_args = {
     'owner': Variable.get("owner"),
@@ -63,10 +57,17 @@ def chau_world_loop():
 
 
 def run_adf_pipeline(pipeline_name):
-    print("run_pipeline var")
+    print("----------run_pipeline var")
     print(tof_pipeline_run)
-    print("run_all var")
+    print("----------run_all var")
     print(tof_az_func)
+    print("----------run_func var") 
+    print(tof_az_func)
+    print("----------types")
+    print(type(tof_pipeline_run))
+    print(type(tof_az_func))
+    print(type(tof_all))
+
 
     '''Runs an Azure Data Factory pipeline using the AzureDataFactoryHook and passes in a date parameter
     '''
@@ -167,10 +168,6 @@ def on_succeed_callback(context):
 #Azure Functions connection
 # Build and send a request to the POST API
 def post_data(shared_key, body):
-    print("run_func var") 
-    print(tof_az_func)
-    print("run_all var")
-    print(tof_all)
     method = 'POST'
     content_type = 'application/json'
     resource = '/api/logs'
