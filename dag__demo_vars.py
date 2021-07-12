@@ -25,9 +25,14 @@ from airflow.providers.http.sensors.http import HttpSensor
 #tof_pipeline_run="tof_pipeline_run"
 tof_pipeline_run = Variable.get("tof_pipeline_run")
 #tof_az_func = "tof_az_func"
-tof_pipeline_run = Variable.get("tof_az_func")
+tof_az_func = Variable.get("tof_az_func")
 #tof_all = "tof_all" 
-tof_pipeline_run = Variable.get("tof_all")
+tof_all = Variable.get("tof_all")
+
+print("types")
+print(type(tof_pipeline_run))
+print(type(tof_az_func))
+print(type(tof_all))
 
 
 #default arguments
