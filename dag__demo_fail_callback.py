@@ -32,7 +32,11 @@ tof_all = Variable.get("tof_all")
 #default arguments
 default_args = {
     'owner': Variable.get("owner"),
-    'start_date': days_ago(1)
+    'start_date': days_ago(1),
+    "retries":1,
+    "email_on_failure":True,
+    "email_on_retry": True,
+    "email": "gonzalo.lucena@accenture.com"
 }
 
 
@@ -251,11 +255,11 @@ with DAG('dag__demo_fail_callback',
 
     send_data_to_az_an_serv = BashOperator(task_id='send_data_to_az_an_serv',
                      bash_command='exit 1',
-                     on_failure_callback="failure")
+                     on_failure_callback=failure)
 
     end = BashOperator(task_id='end',
                         bash_command='exit 0',
-                        on_failure_callback="failure")
+                        on_failure_callback=failure)
 
 start >> run_etl_pipeline >> Log_error_if_failure 
 run_etl_pipeline >> run_validation_pipeline >> Log_error_if_failure 
