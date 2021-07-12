@@ -157,7 +157,7 @@ def run_adf_pipeline(pipeline_name):
 
 #IF task fails before retries
 def on_retry_callback(context):
-    print("Fail works  !  ")
+    print("Retry works  !  ")
 
 #IF task fails after retries
 def on_failure_callback(context):
@@ -165,7 +165,7 @@ def on_failure_callback(context):
 
 #IF task succeeds
 def on_succeed_callback(context):
-    print("Fail works  !  ")
+    print("Succeed works  !  ")
 
 #Azure Functions connection
 # Build and send a request to the POST API
@@ -228,7 +228,7 @@ def errorLog(projectName, componentType, componentName, eventType, errorCod, err
 with DAG('dag__demo_vars',
          default_args=default_args,
          schedule_interval='@hourly',
-         catchup=False, on_failure_callback="on_failure_callback") as dag:
+         catchup=False, on_failure_callback="on_failure_callback",on_succeed_callback="on_succeed_callback") as dag:
 
     start = DummyOperator(task_id='start')
 
@@ -252,7 +252,7 @@ with DAG('dag__demo_vars',
     send_data_to_az_an_serv = DummyOperator(task_id='send_data_to_az_an_serv')
 
     end = BashOperator(task_id='end',
-                               bash_command='echo ended successfully')
+                               bash_command='exit 1')
 
 start >> run_etl_pipeline >> Log_error_if_failure 
 run_etl_pipeline >> run_validation_pipeline >> Log_error_if_failure 
