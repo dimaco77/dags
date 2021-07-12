@@ -108,9 +108,7 @@ class ExecutePipeline(BaseOperator):
             print('Fallo run_pipeline')
 
     def execute(self, context):
-        message = "Hello {}".format(self.name)
         self.run_adf_pipeline(self.pipeline,self.resource_group)
-        print(message)
         return True
 
 class CheckPipelineStatus(BaseOperator):
@@ -127,14 +125,14 @@ class CheckPipelineStatus(BaseOperator):
 
 
     def check_status(self, adf, resource_group):
-        '''Check Status of Last Activity Runs from specific Pipeline'''
+        '''Check Status of Last Activity Runs from specific Pipeline
 
         subprocess.call([
                             '/opt/airflow/logs/load_activity.sh'
                         ])
 
         print('Se ha ejecutado correctamente')
-
+'''
 
         df = pd.read_json('/opt/airflow/logs/activity_runs.json')
         print(df)
