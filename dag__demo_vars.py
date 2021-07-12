@@ -21,7 +21,6 @@ from airflow.hooks.base_hook import BaseHook
 from airflow.models import Variable
 from airflow.providers.http.operators.http import SimpleHttpOperator
 from airflow.providers.http.sensors.http import HttpSensor
-from airflow.contrib.operators.databricks_operator import DatabricksRunNowOperator
 
 tof_pipeline_run="tof_pipeline_run"
 tof_az_func = "tof_az_func"
