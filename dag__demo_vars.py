@@ -62,12 +62,14 @@ def run_adf_pipeline(pipeline_name):
     print("----------run_all var")
     print(tof_az_func)
     print("----------run_func var") 
-    print(tof_az_func)
+    print(tof_all)
     print("----------types")
     print(type(tof_pipeline_run))
     print(type(tof_az_func))
     print(type(tof_all))
 
+    if tof_pipeline_run.lower() != "true" or tof_all.lower() != "true":
+        return "False"
 
     '''Runs an Azure Data Factory pipeline using the AzureDataFactoryHook and passes in a date parameter
     '''
