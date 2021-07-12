@@ -16,6 +16,7 @@ from airflow.operators.bash_operator import BashOperator
 from airflow.utils.dates import days_ago
 from accenture_tools import ExecutePipeline, CheckPipelineStatus
 from airflow.models import Variable
+import time
 
 
 
@@ -44,13 +45,22 @@ with DAG('dag__base_operator',
 
     t_HelloOperator = ExecutePipeline(task_id="t_HelloOperator", resource_group=RESOURCE_GROUP,pipeline='prueba_pipeline')
 
-    refresh_activity_runs = BashOperator(task_id='refresh_activity_runs', bash_command='az login -u ebaquero@suppliers.tenaris.com -p Argentina123 && az config set extension.use_dynamic_install=yes_without_prompt && az datafactory pipeline-run query-by-factory --factory-name "dftdptdldev-core01" --last-updated-after "2021-01-16T00:36:44.3345758Z" --last-updated-before "2022-06-16T00:49:48.3686473Z" --resource-group "RG-TDP-TDL-DEV" > /opt/airflow/logs/activity_runs.json')
 
+
+    refresh_activity_runs = BashOperator(task_id='refresh_activity_runs', bash_command='az login -u ebaquero@suppliers.tenaris.com -p Argentina123 && az config set extension.use_dynamic_install=yes_without_prompt && az datafactory pipeline-run query-by-factory --factory-name "dftdptdldev-core01" --last-updated-after "2021-01-16T00:36:44.3345758Z" --last-updated-before "2022-06-16T00:49:48.3686473Z" --resource-group "RG-TDP-TDL-DEV" > /opt/airflow/logs/activity_runs.json')
     t_CheckPipelineStatus = CheckPipelineStatus(task_id='t_CheckPipelineStatus', adf=ADF_NAME, resource_group=RESOURCE_GROUP)
 
     end = BashOperator(task_id='end',bash_command='echo prueba_bash')
+    while not t_CheckPipelineStatus:
+        time.wait(10)
+        refresh_activity_runs >> t_CheckPipelineStatus
 
     start >> t_HelloOperator >> refresh_activity_runs >> t_CheckPipelineStatus >> end
+
+
+
+
+
 
 
 
